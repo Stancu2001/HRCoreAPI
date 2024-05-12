@@ -35,14 +35,13 @@ public class QRScanController {
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Invalid QR Code scanned"));
         }
 
-        // Determină ultimul log și alternează tipul
         TimeLog lastLog = timeLogRepository.findTopByEmployeeOrderByIdDesc(employee);
         String type = (lastLog == null || "exit".equals(lastLog.getType())) ? "entry" : "exit";
 
         TimeLog log = new TimeLog();
         log.setEmployee(employee);
         log.setTimestamp(LocalDateTime.now());
-        log.setType(type);  // Setează tipul determinat
+        log.setType(type);
         timeLogRepository.save(log);
 
         Map<String, String> response = new HashMap<>();

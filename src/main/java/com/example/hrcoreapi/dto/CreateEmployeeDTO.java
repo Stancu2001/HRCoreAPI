@@ -43,5 +43,7 @@ public class CreateEmployeeDTO {
     @NotBlank
     private String cnp;
 
+    private String BankCode;
+
     private String remarks;
 }

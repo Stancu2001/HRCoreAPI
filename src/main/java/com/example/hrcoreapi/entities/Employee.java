@@ -45,7 +45,7 @@ public class Employee {
     private LocalDate registered;
 
     @Column(name = "confirmed")
-    private boolean confirmed;
+    private String BankCode;
 
     @Column(name="CNP")
     private String cnp;

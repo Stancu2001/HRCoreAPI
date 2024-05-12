@@ -34,6 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      @Override
       public boolean createEmployee(CreateAddressDTO createAddressDTO, CreateEmployeeDTO createEmployeeDTO, UpdateEmployeeFunctionDTO updateEmployeeFunctionDTO){
          try {
+             System.out.println("Test");
              Address address=new Address();
              address.setCountry(createAddressDTO.getCountry());
              address.setCity(createAddressDTO.getCity());
@@ -51,12 +52,15 @@ public class EmployeeServiceImpl implements EmployeeService {
              employee.setNationality(createEmployeeDTO.getNationality());
              employee.setGender(createEmployeeDTO.getGender());
              employee.setRegistered(LocalDate.now());
+             employee.setBankCode(createEmployeeDTO.getBankCode());
+             System.out.println("TESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS "+createEmployeeDTO.getBankCode());
              employee.setCnp(createEmployeeDTO.getCnp());
              employee.setRemarks(createEmployeeDTO.getRemarks());
              DepartmentalFunctions departmentalFunctions=departmentalFunctionsRepository.findById(updateEmployeeFunctionDTO.getId()).orElse(null);
              if(departmentalFunctions==null){
                  return false;
              }
+             System.out.println("test1");
              address= addressService.saveAddress(address);
              employee.setAddress(address);
              employee.setDepartmentalFunctions(departmentalFunctions);
@@ -66,7 +70,6 @@ public class EmployeeServiceImpl implements EmployeeService {
              QrCode qrCode1=qrCodeRepository.save(qrCode);
              employee.setQrCode(qrCode1);
              saveEmployee(employee);
-             System.out.println("Test");
          return true;
          }catch (Exception e){
              e.printStackTrace();
