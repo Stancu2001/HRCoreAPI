@@ -96,7 +96,6 @@
             <version>${swagger-models.version}</version>
         </dependency>
 
->>>>>>> 81711f151ca0a1a55e2312086a8f322a40a1d276
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
