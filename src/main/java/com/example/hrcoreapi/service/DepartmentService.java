@@ -14,7 +14,7 @@ public interface DepartmentService {
 
     boolean deleteDepartment(int IdDepartment);
 
-    Department getDepartment(int id);
+    DepartmentDTO getDepartment(int id);
 
     boolean updateDepartment(int id,CreateDepartmentDTO createDepartmentDTO);
     List<DepartmentDTO> getAllDepartment();

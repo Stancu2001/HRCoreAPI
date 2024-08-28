@@ -6,6 +6,7 @@ import com.example.hrcoreapi.dto.DepartmentDTO;
 import com.example.hrcoreapi.entities.Department;
 import com.example.hrcoreapi.entities.Employee;
 import com.example.hrcoreapi.repositories.DepartmentRepository;
+import com.example.hrcoreapi.repositories.EmployeeRepository;
 import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.List;
 public class DepartmentServiceImpl implements DepartmentService{
     @Autowired
     DepartmentRepository departmentRepository;
+    @Autowired
+    EmployeeRepository employeeRepository;
 
     @Override
     public void saveDepartment(Department department){
@@ -47,8 +50,16 @@ public class DepartmentServiceImpl implements DepartmentService{
         return viewDepartment;
     }
     @Override
-    public Department getDepartment(int id) {
-        return departmentRepository.findById(id).orElse(null);
+    public DepartmentDTO getDepartment(int id) {
+        var department=departmentRepository.findById(id).orElse(null);
+        var employee= employeeRepository.findAllEmployeesByDepartmentId(id);
+        var departamentDTO= new DepartmentDTO();
+        assert department != null;
+        departamentDTO.setId(department.getIdDepartment());
+        departamentDTO.setName(department.getNameDepartment());
+        departamentDTO.setFunctions(department.getFunctions());
+        departamentDTO.setEmployeeList(employee);
+        return  departamentDTO;
     }
 
     @Override
