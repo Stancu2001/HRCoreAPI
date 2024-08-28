@@ -13,6 +13,10 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 81711f151ca0a1a55e2312086a8f322a40a1d276
 @Configuration
 @ConditionalOnMissingBean(BuildProperties.class)
 public class SwaggerConfig {
@@ -48,4 +52,8 @@ public class SwaggerConfig {
                 .description("Travel Journal Api")
                 .version(version);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 81711f151ca0a1a55e2312086a8f322a40a1d276

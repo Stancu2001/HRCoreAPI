@@ -17,6 +17,8 @@
         <swagger-annotations.version>2.2.20</swagger-annotations.version>
         <swagger-models.version>2.2.20</swagger-models.version>
         <java.version>17</java.version>
+        <swagger-annotations.version>2.2.20</swagger-annotations.version>
+        <swagger-models.version>2.2.20</swagger-models.version>
     </properties>
     <dependencies>
         <dependency>
@@ -69,6 +71,13 @@
 <!--        </dependency>-->
 
         <dependency>
+<<<<<<< HEAD
+        <groupId>org.mariadb.jdbc</groupId>
+        <artifactId>mariadb-java-client</artifactId>
+        </dependency>
+
+
+=======
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
         </dependency>
@@ -90,6 +99,7 @@
             <version>${swagger-models.version}</version>
         </dependency>
 
+>>>>>>> 81711f151ca0a1a55e2312086a8f322a40a1d276
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -105,6 +115,23 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotations.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>${swagger-models.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

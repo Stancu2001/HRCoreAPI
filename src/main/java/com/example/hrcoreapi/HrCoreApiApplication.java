@@ -11,12 +11,14 @@ import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMap
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 @SpringBootApplication
+@EnableWebMvc
 @EnableJpaRepositories
 public class HrCoreApiApplication {
     @Bean
@@ -28,6 +30,10 @@ public class HrCoreApiApplication {
         SpringApplication.run(HrCoreApiApplication.class, args);
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6f83d3debb2dadc0bc42f629eb2be251e8cf3e59
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
