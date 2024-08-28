@@ -62,6 +62,14 @@ public class DepartmentServiceImpl implements DepartmentService{
         return  departamentDTO;
     }
 
+
+    @Override
+    public Department getDepartmentByID(int id) {
+        var department=departmentRepository.findById(id).orElse(null);
+
+        return  department;
+    }
+
     @Override
     public  boolean updateDepartment(int id,CreateDepartmentDTO createDepartmentDTO){
         Department department=departmentRepository.findById(id).orElse(null);
