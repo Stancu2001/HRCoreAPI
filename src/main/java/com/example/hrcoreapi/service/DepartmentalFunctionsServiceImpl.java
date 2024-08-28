@@ -29,13 +29,15 @@ public class DepartmentalFunctionsServiceImpl implements DepartmentalFunctionsSe
     public boolean create_function(int idDepartment,Create_Department_FunctionDTO createDepartmentFunctionDTO){
         try {
 
-            Department getDepartment= departmentService.getDepartment(idDepartment);
-            if(getDepartment==null){
-                return false;
-            }
+            var getDepartment= departmentService.getDepartment(idDepartment);
+            var department=new Department();
+            department.setIdDepartment(getDepartment.getId());
+            department.setNameDepartment(getDepartment.getName());
+            department.setFunctions(getDepartment.getFunctions());
+
             DepartmentalFunctions departmentalFunctions=new DepartmentalFunctions();
             departmentalFunctions.setFunctionName(createDepartmentFunctionDTO.getName());
-            departmentalFunctions.setDepartment(getDepartment);
+            departmentalFunctions.setDepartment(department);
             save(departmentalFunctions);
             return true;
         }catch (Exception e){

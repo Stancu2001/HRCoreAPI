@@ -33,7 +33,8 @@ public class DepartmentController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> getDepartment(@PathVariable int id){
-        Department department=departmentService.getDepartment(id);
+        var department=departmentService.getDepartment(id);
+
         if(department==null){
             return ResponseEntity.badRequest().build();
         }

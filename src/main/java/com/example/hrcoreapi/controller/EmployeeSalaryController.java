@@ -24,7 +24,7 @@ public class EmployeeSalaryController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/modify/{id}")
+    @PutMapping("/modify/{id}")
     public ResponseEntity<?> modifySalary(@PathVariable int id, @Valid @RequestBody PercentSalaryDTO percentSalaryDTO){
         boolean modifySalary=employeeSalaryService.modifySalary(id,percentSalaryDTO);
         if(!modifySalary){
