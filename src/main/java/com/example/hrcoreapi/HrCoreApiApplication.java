@@ -29,11 +29,6 @@ public class HrCoreApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(HrCoreApiApplication.class, args);
     }
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 6f83d3debb2dadc0bc42f629eb2be251e8cf3e59
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
