@@ -23,7 +23,7 @@ public class QrCode {
     @Column(nullable = false, unique = true)
     private UUID code;
 
-    @OneToOne(mappedBy = "qrCode")
+    @OneToOne(mappedBy = "qrCode",fetch = FetchType.EAGER)
     @JsonIgnore
     private Employee employee;
 }

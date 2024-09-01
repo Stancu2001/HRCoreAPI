@@ -20,7 +20,7 @@ public class Department {
 
     @Column(name = "nume_departament",nullable = false)
     private String nameDepartment;
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<DepartmentalFunctions> functions = new ArrayList<>();
 
 }

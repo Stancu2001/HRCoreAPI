@@ -52,7 +52,7 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public DepartmentDTO getDepartment(int id) {
         var department=departmentRepository.findById(id).orElse(null);
-        var employee= employeeRepository.findAllEmployeesByDepartmentId(id);
+        var employee= employeeRepository.findEmployeesByDepartmentId(id);
         var departamentDTO= new DepartmentDTO();
         assert department != null;
         departamentDTO.setId(department.getIdDepartment());

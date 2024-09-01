@@ -53,7 +53,7 @@ public class Employee {
     @Column(name="observatii")
     private String remarks;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "department_functions_id")
     private DepartmentalFunctions departmentalFunctions;
 
@@ -67,10 +67,10 @@ public class Employee {
     @JoinColumn(name = "qr_code_id", referencedColumnName = "id")
     private QrCode qrCode;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<EmployeeSalary> salaries;
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<PayrollRecord> payrollRecords;
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<TimeLog> timeLogs;
 }

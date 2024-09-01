@@ -36,10 +36,7 @@ public class CreateEmployeeDTO {
 
     @NotBlank
     private String gender;
-
-    @NotNull
-    private LocalDate registered;
-
+    
     @NotBlank
     private String cnp;
 

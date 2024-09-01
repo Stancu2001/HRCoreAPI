@@ -23,7 +23,7 @@ public class DepartmentalFunctions {
     @Column(name = "nume_functie" , nullable = false)
     private String functionName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     @JsonIgnore
     private Department department;

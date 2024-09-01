@@ -33,6 +33,7 @@ public class DepartmentalFunctionsServiceImpl implements DepartmentalFunctionsSe
             if(getDepartment==null){
                 return 1;
             }
+
             DepartmentalFunctions departmentalFunctions=new DepartmentalFunctions();
             departmentalFunctions.setFunctionName(createDepartmentFunctionDTO.getName());
             departmentalFunctions.setDepartment(getDepartment);
@@ -61,7 +62,9 @@ public class DepartmentalFunctionsServiceImpl implements DepartmentalFunctionsSe
         if(!employeeList.isEmpty()){
             return false;
         }
-        departmentalFunctionsRepository.deleteById(functionId);
+        var department=departmentalFunctions.getDepartment();
+        department.getFunctions().remove(departmentalFunctions);
+        departmentalFunctionsRepository.delete(departmentalFunctions);
         return  true;
     }
 
