@@ -1,0 +1,14 @@
+<div
+  class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <department-card (onAdd)="add()" />
+
+  @for (department of departments; track department.id) {
+    <department-card
+      [department]="department"
+      (onEdit)="edit($event)"
+      (onDelete)="delete($event)" />
+  }
+</div>
+
+<p-confirmDialog />
+<department-modal />

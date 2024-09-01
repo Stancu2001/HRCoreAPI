@@ -1,0 +1,211 @@
+<p-dialog
+  header="{{ department?.name }}"
+  [modal]="true"
+  [draggable]="false"
+  [(visible)]="visible"
+  [style]="{ width: '75%' }"
+  [closeOnEscape]="true">
+  <p-tabView>
+    <p-tabPanel header="Employee">
+      <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left"></ng-template>
+        <ng-template pTemplate="right">
+          <p-button
+            label="Add employee"
+            icon="pi pi-plus"
+            (onClick)="openAddEmployeeModal()"></p-button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table
+        selectionMode="single"
+        (onRowSelect)="onRowSelect($event)"
+        (onRowUnselect)="onRowSelect($event)"
+        styleClass="p-datatable-striped"
+        [value]="department?.employeeList ?? []"
+        [scrollable]="true"
+        scrollHeight="400px">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Function</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Age</th>
+            <th>Nationality</th>
+            <th>Gender</th>
+            <th>Registered</th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-employee>
+          <tr class="cursor-pointer hover:text-blue-500">
+            <td [pSelectableRow]="employee">{{ rowIndex + 1 }}</td>
+            <td [pSelectableRow]="employee">
+              {{ employee.firstName }} {{ employee.lastName }}
+            </td>
+            <td [pSelectableRow]="employee">
+              {{ employee.departmentalFunctions.functionName }}
+            </td>
+            <td [pSelectableRow]="employee">{{ employee.email }}</td>
+            <td [pSelectableRow]="employee">{{ employee.phone }}</td>
+            <td [pSelectableRow]="employee">{{ employee.age }}</td>
+            <td [pSelectableRow]="employee">{{ employee.nationality }}</td>
+            <td [pSelectableRow]="employee">{{ employee.gender }}</td>
+            <td [pSelectableRow]="employee">
+              {{ employee.registered | date: 'dd/MMM/YYYY' }}
+            </td>
+            <td class="table-cell gap-2">
+              <p-button
+                size="small"
+                icon="pi pi-times"
+                [rounded]="true"
+                severity="primary"
+                (onClick)="deleteEmployee(rowIndex)" />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Functions" class="h-[100vh]">
+      <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left"></ng-template>
+        <ng-template pTemplate="right">
+          <p-button
+            label="Add function"
+            icon="pi pi-plus"
+            (onClick)="openAddFunctionModal()"></p-button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table
+        styleClass="p-datatable-striped"
+        [value]="department?.functions ?? []"
+        [scrollable]="true"
+        scrollHeight="400px">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-function>
+          <tr>
+            <td>{{ rowIndex + 1 }}</td>
+            <td>{{ function.functionName }}</td>
+            <td class="flex gap-2">
+              <p-button
+                size="small"
+                icon="pi pi-pencil"
+                [rounded]="true"
+                (onClick)="openEditFunctionModal(rowIndex)"></p-button>
+              <p-button
+                size="small"
+                icon="pi pi-times"
+                [rounded]="true"
+                severity="primary"
+                (onClick)="deleteFunction(rowIndex)" />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>
+
+<p-sidebar
+  *ngIf="selectedEmployee"
+  [(visible)]="viewEmployeeData"
+  styleClass="w-[400px]">
+  <ng-template pTemplate="header">
+    <span class="text-xl font-semibold">Employee details</span>
+  </ng-template>
+  <!-- <pre>{{ selectedEmployee | json }}</pre> -->
+
+  <div class="grid gap-2">
+    <div class="flex flex-col gap-0.5 text-[12px]">
+      <label>Name</label>
+      <input
+        pInputText
+        disabled
+        value="{{ selectedEmployee.firstName }} {{
+          selectedEmployee.lastName
+        }}" />
+    </div>
+
+    <div class="flex flex-col gap-0.5 text-[12px]">
+      <label>Phone</label>
+      <input pInputText disabled value="{{ selectedEmployee.phone }} " />
+    </div>
+
+    <div class="flex flex-col gap-0.5 text-[12px]">
+      <label>CNP</label>
+      <input pInputText disabled value="{{ selectedEmployee.cnp }} " />
+    </div>
+
+    <div class="flex flex-col gap-0.5 text-[12px]">
+      <label>Nationality</label>
+      <input pInputText disabled value="{{ selectedEmployee.nationality }} " />
+    </div>
+
+    <div class="flex flex-col gap-0.5 text-[12px]">
+      <label>Gender</label>
+      <input pInputText disabled value="{{ selectedEmployee.gender }} " />
+    </div>
+
+    <div class="flex flex-col gap-0.5 text-[12px]">
+      <label>Registered</label>
+      <input
+        pInputText
+        disabled
+        value="{{
+          $any(selectedEmployee.registered) | date: 'dd MMMM YYYY'
+        }} " />
+    </div>
+
+    <div class="flex flex-col gap-0.5 text-[12px]">
+      <label>Salary</label>
+
+      @for (entry of selectedEmployee.salaries; track entry.id) {
+        <div class="flex justify-between">
+          <div>
+            <p-tag
+              [value]="
+                ($any(entry.effectiveFrom) | date: 'dd MMMM YYYY') ?? ''
+              " />
+
+            -
+
+            <p-tag
+              [value]="
+                ($any(entry.effectiveTo) | date: 'dd MMMM YYYY') ?? ''
+              " />
+          </div>
+
+          <p-tag severity="success" [value]="entry.salary.toLocaleString()" />
+        </div>
+      }
+    </div>
+
+    <div class="flex flex-col gap-0.5 text-[12px]">
+      <label>Time logs</label>
+
+      @for (entry of selectedEmployee.timeLogs; track entry.id) {
+        <div class="flex justify-between">
+          <div>
+            <p-tag
+              [value]="
+                ($any(entry).display | date: 'dd MMMM YYYY hh:mm:ss') ?? ''
+              " />
+          </div>
+
+          <p-tag
+            [severity]="entry.type === 'entry' ? 'success' : 'danger'"
+            [value]="entry.type" />
+        </div>
+      }
+    </div>
+  </div>
+</p-sidebar>
