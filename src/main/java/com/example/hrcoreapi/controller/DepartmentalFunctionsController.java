@@ -6,6 +6,7 @@ import com.example.hrcoreapi.dto.DepartmentalFunctionsDTO;
 import com.example.hrcoreapi.service.DepartmentalFunctionsService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +20,14 @@ public class DepartmentalFunctionsController {
 
     @PostMapping("{id}/save")
     public ResponseEntity<?> createDepartment(@Valid @RequestBody Create_Department_FunctionDTO createDepartmentFunctionDTO, @PathVariable int id){
-        boolean saveFunction= departmentalFunctionsService.create_function(id,createDepartmentFunctionDTO);
-        if(!saveFunction){
-            return ResponseEntity.internalServerError().build();
+        int saveFunction= departmentalFunctionsService.create_function(id,createDepartmentFunctionDTO);
+        switch(saveFunction) {
+            case 1:
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Departamentul nu exista");
+            case 2: return ResponseEntity.ok().build();
+            default:
+                return ResponseEntity.internalServerError().build();
         }
-        return ResponseEntity.ok().build();
     }
     @GetMapping("/{id}/getAll")
     public ResponseEntity<?> getFunctionDepartment(@PathVariable int id){

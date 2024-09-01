@@ -26,18 +26,20 @@ public class DepartmentalFunctionsServiceImpl implements DepartmentalFunctionsSe
         departmentalFunctionsRepository.save(departmentalFunctions);
     }
     @Override
-    public boolean create_function(int idDepartment,Create_Department_FunctionDTO createDepartmentFunctionDTO){
+    public int create_function(int idDepartment,Create_Department_FunctionDTO createDepartmentFunctionDTO){
         try {
 
             var getDepartment= departmentService.getDepartmentByID(idDepartment);
-            
+            if(getDepartment==null){
+                return 1;
+            }
             DepartmentalFunctions departmentalFunctions=new DepartmentalFunctions();
             departmentalFunctions.setFunctionName(createDepartmentFunctionDTO.getName());
             departmentalFunctions.setDepartment(getDepartment);
             save(departmentalFunctions);
-            return true;
+            return 1<<1;
         }catch (Exception e){
-            return false;
+            return 1<<2;
         }
     }
 
