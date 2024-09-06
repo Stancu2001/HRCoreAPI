@@ -1,0 +1,50 @@
+<div class="flex h-[50px] items-center bg-blue-500 px-5">
+  <div class="pr-5 text-[20px] font-bold text-white">HRCORE-UI</div>
+
+  <div class="flex flex-grow items-center justify-between text-white">
+    <ul class="m-0 flex list-none gap-3 p-0">
+      @for (item of items; track item.name) {
+        <li
+          class="cursor-pointer hover:font-light"
+          [routerLink]="item.path"
+          [routerLinkActive]="'navigation-item-active'">
+          {{ item.name }}
+        </li>
+      }
+    </ul>
+
+    <p-button severity="secondary" *ngIf="!isAuth" (onClick)="showLogin()"
+      >Login</p-button
+    >
+    <p-button severity="secondary" *ngIf="isAuth" (onClick)="logout()"
+      >Logout</p-button
+    >
+  </div>
+</div>
+
+<p-dialog
+  header="Login with your account"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '25rem' }"
+  [closeOnEscape]="true"
+  [draggable]="false">
+  <form class="grid gap-5" [formGroup]="loginForm">
+    <div class="grid gap-1">
+      <label class="block w-full text-[13px]" for="email">Email</label>
+      <input pInputText type="email" [formControlName]="'email'" />
+    </div>
+    <div class="grid gap-1">
+      <label class="block w-full text-[13px]" for="username">Password</label>
+      <input
+        pInputText
+        id="password"
+        type="password"
+        [formControlName]="'password'" />
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
+    <p-button label="Login" (onClick)="login()" />
+  </ng-template>
+</p-dialog>

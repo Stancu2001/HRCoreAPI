@@ -1,0 +1,157 @@
+<div class="align-items-center mb-3 grid gap-2">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p-stepper>
+      <p-stepperPanel header="Details">
+        <ng-template
+          pTemplate="content"
+          let-nextCallback="nextCallback"
+          let-prevCallback="prevCallback"
+          let-index="index">
+          <div formGroupName="employee" class="grid gap-2">
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="firstName">First name</label>
+              <input pInputText id="firstName" formControlName="firstName" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="lastName">Last name</label>
+              <input pInputText id="lastName" formControlName="lastName" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="email">Email</label>
+              <input pInputText id="email" formControlName="email" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="phone">Phone</label>
+              <input pInputText id="phone" formControlName="phone" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="nationality">Nationality</label>
+              <input
+                pInputText
+                id="nationality"
+                formControlName="nationality" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="cnp">CNP</label>
+              <input pInputText id="cnp" formControlName="cnp" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="bankCode">Bank code</label>
+              <input pInputText id="bankCode" formControlName="bankCode" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="gender">Gender</label>
+              <input pInputText id="gender" formControlName="gender" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="age">Age</label>
+              <input pInputText id="age" formControlName="age" />
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-5">
+            <p-button
+              label="Next"
+              icon="pi pi-angle-right"
+              (onClick)="nextCallback.emit()"></p-button>
+          </div>
+        </ng-template>
+      </p-stepperPanel>
+
+      <p-stepperPanel header="Address">
+        <ng-template
+          pTemplate="content"
+          let-prevCallback="prevCallback"
+          let-nextCallback="nextCallback"
+          let-index="index">
+          <div formGroupName="address" class="grid gap-2">
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="street">Street</label>
+              <input pInputText id="street" formControlName="street" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="city">City</label>
+              <input pInputText id="city" formControlName="city" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="country">Country</label>
+              <input pInputText id="country" formControlName="country" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="number">Number</label>
+              <input pInputText id="number" formControlName="number" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="apartment">Apartment</label>
+              <input pInputText id="apartment" formControlName="apartment" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="staircase">Stair Case</label>
+              <input pInputText id="staircase" formControlName="staircase" />
+            </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="floor">Floor</label>
+              <input pInputText id="floor" formControlName="floor" />
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-5">
+            <p-button
+              label="Back"
+              icon="pi pi-angle-left"
+              (onClick)="prevCallback.emit()"></p-button>
+
+            <p-button
+              label="Next"
+              icon="pi pi-angle-right"
+              (onClick)="nextCallback.emit()"></p-button>
+          </div>
+        </ng-template>
+      </p-stepperPanel>
+
+      <p-stepperPanel header="Function">
+        <ng-template
+          pTemplate="content"
+          let-prevCallback="prevCallback"
+          let-nextCallback="nextCallback"
+          let-index="index">
+          <div formGroupName="function" class="grid gap-2">
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="id">Function</label>
+              <p-dropdown
+                appendTo="body"
+                [options]="functions"
+                optionLabel="functionName"
+                optionValue="functionId"
+                formControlName="id"
+                styleClass="w-full" />
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-5">
+            <p-button
+              label="Back"
+              icon="pi pi-angle-left"
+              (onClick)="prevCallback.emit()"></p-button>
+
+            <p-button type="submit" label="Save" icon="pi pi-plus"></p-button>
+          </div>
+        </ng-template>
+      </p-stepperPanel>
+    </p-stepper>
+  </form>
+</div>
