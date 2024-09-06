@@ -151,4 +151,45 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
+    @Override
+    public int updateDetailsEmployee(int id, CreateAddressDTO createAddressDTO, CreateEmployeeDTO createEmployeeDTO, UpdateEmployeeFunctionDTO updateEmployeeFunctionDT) {
+        try {
+            Employee employee = employeeRepository.findById(id).orElse(null);
+            if (employee == null) {
+                return 1;
+            }
+            Address employee_address = employee.getAddress();
+            employee_address.setCountry(createAddressDTO.getCountry());
+            employee_address.setCity(createAddressDTO.getCity());
+            employee_address.setStreet(createAddressDTO.getStreet());
+            employee_address.setNumber(createAddressDTO.getNumber());
+            employee_address.setApartment(createAddressDTO.getApartment());
+            employee_address.setStaircase(createAddressDTO.getStaircase());
+            employee_address.setFloor(createAddressDTO.getFloor());
+            employee_address = addressService.saveAddress(employee_address);
+            employee.setAddress(employee_address);
+
+            DepartmentalFunctions departmentalFunctions = departmentalFunctionsRepository.findById(updateEmployeeFunctionDT.getId()).orElse(null);
+            if (departmentalFunctions == null) {
+                return 1<<1;
+            }
+            employee.setDepartmentalFunctions(departmentalFunctions);
+
+            employee.setEmail(createEmployeeDTO.getEmail());
+            employee.setFirstName(createEmployeeDTO.getFirstName());
+            employee.setLastName(createEmployeeDTO.getLastName());
+            employee.setAge(createEmployeeDTO.getAge());
+            employee.setPhone(createEmployeeDTO.getPhone());
+            employee.setNationality(createEmployeeDTO.getNationality());
+            employee.setGender(createEmployeeDTO.getGender());
+            employee.setRegistered(LocalDate.now());
+            employee.setCnp(createEmployeeDTO.getCnp());
+            employee.setRemarks(createEmployeeDTO.getRemarks());
+
+             saveEmployee(employee);
+            return 1<<2;
+        } catch (Exception e) {
+           return 1<<3;
+        }
+    }
 }

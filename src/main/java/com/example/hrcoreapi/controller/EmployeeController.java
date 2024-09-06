@@ -10,6 +10,7 @@ import com.example.hrcoreapi.service.EmployeeServiceImpl;
 import jakarta.persistence.Tuple;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,28 +60,38 @@ public class EmployeeController {
     }
 
 
-    @PutMapping("/{id}/functions")
-    public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody UpdateEmployeeFunctionDTO updateEmployeeFunctionDTO){
-        Employee deleteEmployee=employeeService.updateEmployeeFunctionDTO(id,updateEmployeeFunctionDTO.getId());
-        if(deleteEmployee==null) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok().build();
-    }
-    @PutMapping("/{id}/address")
-    public ResponseEntity<?> updateAddress(@PathVariable int id, @Valid @RequestBody CreateAddressDTO addressDTO){
-        Employee deleteEmployee=employeeService.updateEmployeeAddress(id,addressDTO);
-        if(deleteEmployee==null) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok().build();
-    }
+//    @PutMapping("/{id}/functions")
+//    public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody UpdateEmployeeFunctionDTO updateEmployeeFunctionDTO){
+//        Employee deleteEmployee=employeeService.updateEmployeeFunctionDTO(id,updateEmployeeFunctionDTO.getId());
+//        if(deleteEmployee==null) {
+//            return ResponseEntity.badRequest().build();
+//        }
+//        return ResponseEntity.ok().build();
+//    }
+//    @PutMapping("/{id}/address")
+//    public ResponseEntity<?> updateAddress(@PathVariable int id, @Valid @RequestBody CreateAddressDTO addressDTO){
+//        Employee deleteEmployee=employeeService.updateEmployeeAddress(id,addressDTO);
+//        if(deleteEmployee==null) {
+//            return ResponseEntity.badRequest().build();
+//        }
+//        return ResponseEntity.ok().build();
+//    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<?> updateEmployee(@PathVariable int id, @Valid @RequestBody CreateEmployeeDTO employeeDTO){
+//        Employee deleteEmployee=employeeService.updateEmployee(id,employeeDTO);
+//        if(deleteEmployee==null) {
+//            return ResponseEntity.badRequest().build();
+//        }
+//        return ResponseEntity.ok().build();
+//    }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateEmployee(@PathVariable int id, @Valid @RequestBody CreateEmployeeDTO employeeDTO){
-        Employee deleteEmployee=employeeService.updateEmployee(id,employeeDTO);
-        if(deleteEmployee==null) {
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> updateAllDetailsEmployee(@PathVariable int id, @Valid @RequestPart("Address") CreateAddressDTO createAddressDTO, @Valid @RequestPart("Employee") CreateEmployeeDTO createEmployeeDTO,@Valid @RequestPart("idfunctie") UpdateEmployeeFunctionDTO updateEmployeeFunctionDTO){
+        int employee= employeeService.updateDetailsEmployee(id, createAddressDTO, createEmployeeDTO, updateEmployeeFunctionDTO);
+        switch (employee){
+            case 1: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
+            case 2: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Function not found");
+            case 4: return ResponseEntity.ok("Employee updated successfully");
+            default: return ResponseEntity.internalServerError().body("Internal server error");
         }
-        return ResponseEntity.ok().build();
     }
 }

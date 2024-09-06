@@ -21,4 +21,6 @@ public interface EmployeeService {
     Employee updateEmployeeAddress(int id, CreateAddressDTO createAddressDTO);
 
     Employee updateEmployee(int id, CreateEmployeeDTO createEmployeeDTO);
+
+    int updateDetailsEmployee(int id, CreateAddressDTO createAddressDTO, CreateEmployeeDTO createEmployeeDTO, UpdateEmployeeFunctionDTO updateEmployeeFunctionDT);
 }
