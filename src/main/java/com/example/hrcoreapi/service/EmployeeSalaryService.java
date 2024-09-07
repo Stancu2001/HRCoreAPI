@@ -27,6 +27,11 @@ public class EmployeeSalaryService {
         if(employee==null){
             return false;
         }
+        Optional<EmployeeSalary> checkEmployeeSalary=employeeSalaryRepository.findByEmployeeAndEffectiveToIsNull(employee);
+        if(checkEmployeeSalary.isPresent())
+        {
+            return false;
+        }
         EmployeeSalary employeeSalary= new EmployeeSalary();
         employeeSalary.setEmployee(employee);
         employeeSalary.setSalary(addSalaryDTO.getSalary());
