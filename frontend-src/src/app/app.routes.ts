@@ -5,6 +5,11 @@ import { QrComponent } from './features/qr/qr.component';
 
 export const routes: Routes = [
   {
+    path: "",
+    pathMatch: "full",
+    redirectTo: "/departments",
+  },
+  {
     path: '',
     component: LayoutDefaultComponent,
     children: [

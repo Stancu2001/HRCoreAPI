@@ -9,6 +9,7 @@ import { ConfirmationService } from 'primeng/api';
 import { FunctionService } from '../../../shared/services/function.service';
 import { Employee } from '../../../shared/models/employee.types';
 import { EmployeeService } from '../../../shared/services/employee.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'department-modal',
@@ -22,6 +23,7 @@ export class DepartmentModalComponent {
   department?: Department;
   selectedEmployee: Employee;
   viewEmployeeData = false;
+  salary?: number | null = null;
 
   constructor(
     private _departmentService: DepartmentService,
@@ -148,6 +150,24 @@ export class DepartmentModalComponent {
           );
         });
       });
+
+      this.salary = null;
     });
+  }
+
+  setSalary(employee: Employee, salary?: number) {
+    if (this.salary == null) {
+      return;
+    }
+
+    if (employee.salaries.length > 0) {
+      this._employeeService.modifySalary(employee, salary!).subscribe(() => {
+        this.loadDepartment(this.department?.id!);
+      });
+    } else {
+      this._employeeService.setSalary(employee, salary!).subscribe(() => {
+        this.loadDepartment(this.department?.id!);
+      });
+    }
   }
 }

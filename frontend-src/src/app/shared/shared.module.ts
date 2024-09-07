@@ -16,6 +16,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
 import { TagModule } from 'primeng/tag';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { TooltipModule } from 'primeng/tooltip';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 const primeNgModules = [
   InputTextModule,
@@ -31,6 +33,8 @@ const primeNgModules = [
   DropdownModule,
   SidebarModule,
   TagModule,
+  TooltipModule,
+  OverlayPanelModule,
 ];
 
 @NgModule({

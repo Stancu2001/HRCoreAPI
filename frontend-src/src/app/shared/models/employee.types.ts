@@ -16,6 +16,7 @@ export interface Employee {
   address: Address;
   departmentalFunctions: Function;
   salaries: Salary[];
+  payrollRecords: Payroll[];
   timeLogs: TimeLog[];
 }
 
@@ -24,6 +25,17 @@ export interface Salary {
   salary: number;
   effectiveFrom: number[];
   effectiveTo: number[];
+}
+
+export interface Payroll {
+  id: number;
+  calculate_salary: number[];
+  cas: number;
+  cass: number;
+  incomeTax: number;
+  month: number;
+  salaryBrut: number;
+  salaryNet: number;
 }
 
 export interface TimeLog {

@@ -10,14 +10,16 @@
         icon="pi pi-pencil"
         [rounded]="true"
         severity="primary"
-        (onClick)="edit()" />
+        (onClick)="edit()"
+        pTooltip="Edit department" />
 
       <p-button
         size="small"
         icon="pi pi-times"
         [rounded]="true"
         severity="primary"
-        (onClick)="delete()" />
+        (onClick)="delete()"
+        pTooltip="Delete department" />
     </div>
 
     <div *ngIf="!department" class="grid grid-flow-col gap-2">
@@ -26,7 +28,8 @@
         icon="pi pi-plus"
         [rounded]="true"
         severity="primary"
-        (onClick)="add()" />
+        (onClick)="add()"
+        pTooltip="Add department" />
     </div>
   </div>
 </div>

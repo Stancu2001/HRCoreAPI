@@ -56,13 +56,44 @@
             <td [pSelectableRow]="employee">
               {{ employee.registered | date: 'dd/MMM/YYYY' }}
             </td>
-            <td class="table-cell gap-2">
+            <td class="flex gap-2">
               <p-button
                 size="small"
                 icon="pi pi-times"
                 [rounded]="true"
                 severity="primary"
-                (onClick)="deleteEmployee(rowIndex)" />
+                (onClick)="deleteEmployee(rowIndex)"
+                pTooltip="Delete employee" />
+
+              <p-button
+                size="small"
+                icon="pi pi-dollar"
+                [rounded]="true"
+                severity="primary"
+                [pTooltip]="
+                  employee.salaries?.length > 0 ? 'Modify salary' : 'Add salary'
+                "
+                (onClick)="op.toggle($event)">
+                <p-overlayPanel #op>
+                  <div class="flex-column w-25rem flex gap-3">
+                    <input
+                      pInputText
+                      [placeholder]="
+                        employee.salaries?.length > 0
+                          ? '(%) Add salary percent'
+                          : 'Set salary'
+                      "
+                      type="number"
+                      [(ngModel)]="salary"
+                      pKeyFilter="pint" />
+
+                    <p-button
+                      label="Save"
+                      icon="pi pi-save"
+                      (onClick)="setSalary(employee, salary!)"></p-button>
+                  </div>
+                </p-overlayPanel>
+              </p-button>
             </td>
           </tr>
         </ng-template>
@@ -100,13 +131,15 @@
                 size="small"
                 icon="pi pi-pencil"
                 [rounded]="true"
-                (onClick)="openEditFunctionModal(rowIndex)"></p-button>
+                (onClick)="openEditFunctionModal(rowIndex)"
+                pTooltip="Edit function"></p-button>
               <p-button
                 size="small"
                 icon="pi pi-times"
                 [rounded]="true"
                 severity="primary"
-                (onClick)="deleteFunction(rowIndex)" />
+                (onClick)="deleteFunction(rowIndex)"
+                pTooltip="Delete function" />
             </td>
           </tr>
         </ng-template>
@@ -185,6 +218,23 @@
           </div>
 
           <p-tag severity="success" [value]="entry.salary.toLocaleString()" />
+        </div>
+      }
+    </div>
+
+    <div class="flex flex-col gap-0.5 text-[12px]">
+      <label>Payroll records</label>
+
+      @for (entry of selectedEmployee.payrollRecords; track entry.id) {
+        <div class="flex justify-between">
+          <div>
+            <p-tag
+              [value]="
+                ($any(entry.calculate_salary) | date: 'dd MMMM YYYY') ?? ''
+              " />
+          </div>
+
+          <p-tag severity="success" [value]="entry.salaryNet.toString()" />
         </div>
       }
     </div>
