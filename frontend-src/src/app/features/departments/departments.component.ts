@@ -7,6 +7,7 @@ import { ConfirmationService } from 'primeng/api';
 import { DepartmentModalComponent } from './department-modal/department-modal.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DepartmentAddModalComponent } from './department-card/department-add-modal/department-add-modal.component';
+import { DepartmentEditComponent } from './department-edit/department-edit.component';
 
 @Component({
   selector: 'app-departments',
@@ -45,8 +46,22 @@ export class DepartmentsComponent implements OnInit {
     });
   }
 
-  edit(id: number) {
+  details(id: number) {
     this.childComponent.open(id);
+  }
+
+  edit(id: number) {
+    const ref = this._dialogService.open(DepartmentEditComponent, {
+      header: 'Edit department',
+      width: '600px',
+      data: { data: this.departments.find(d => d.id === id) },
+    });
+
+    ref.onClose.subscribe(() => {
+      this._departmentService.getAll().subscribe(res => {
+        this.departments = res;
+      });
+    });
   }
 
   delete(id: number) {

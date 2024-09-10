@@ -18,6 +18,8 @@ import { TagModule } from 'primeng/tag';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { TooltipModule } from 'primeng/tooltip';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ToastModule } from 'primeng/toast';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 const primeNgModules = [
   InputTextModule,
@@ -35,6 +37,8 @@ const primeNgModules = [
   TagModule,
   TooltipModule,
   OverlayPanelModule,
+  ToastModule,
+  InputTextareaModule,
 ];
 
 @NgModule({

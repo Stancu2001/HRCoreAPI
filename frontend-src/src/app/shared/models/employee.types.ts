@@ -12,7 +12,7 @@ export interface Employee {
   gender: string;
   registered: number[];
   cnp: string;
-  remark: string;
+  remarks: string;
   address: Address;
   departmentalFunctions: Function;
   salaries: Salary[];

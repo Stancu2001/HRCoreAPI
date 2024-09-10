@@ -189,6 +189,17 @@
     </div>
 
     <div class="flex flex-col gap-0.5 text-[12px]">
+      <label>Remarks</label>
+      <textarea
+        rows="5"
+        cols="30"
+        pInputTextarea
+        [disabled]="true"
+        autoResize="true"
+        value="{{ selectedEmployee.remarks }}"></textarea>
+    </div>
+
+    <div class="flex flex-col gap-0.5 text-[12px]">
       <label>Registered</label>
       <input
         pInputText
@@ -235,6 +246,20 @@
           </div>
 
           <p-tag severity="success" [value]="entry.salaryNet.toString()" />
+
+          <i
+            class="pi pi-info-circle cursor-pointer items-center"
+            style="display: flex"
+            (click)="op.toggle($event)">
+            <p-overlayPanel #op>
+              <div>Month: {{ entry['month'] | monthFromNumber }}</div>
+              <div>Salary brut: {{ entry['salaryBrut'] }}</div>
+              <div>CAS: {{ entry['cas'] }}</div>
+              <div>CASS: {{ entry['cass'] }}</div>
+              <div>Income tax: {{ entry['incomeTax'] }}</div>
+              <div>Salary net: {{ entry['salaryNet'] }}</div>
+            </p-overlayPanel>
+          </i>
         </div>
       }
     </div>

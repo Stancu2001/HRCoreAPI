@@ -55,6 +55,16 @@
               <label for="age">Age</label>
               <input pInputText id="age" formControlName="age" />
             </div>
+
+            <div class="flex flex-col gap-1 text-[12px]">
+              <label for="remarks">Remarks</label>
+              <textarea
+                pInputTextarea
+                id="remarks"
+                rows="5"
+                cols="1"
+                formControlName="remarks"></textarea>
+            </div>
           </div>
 
           <div class="flex justify-end gap-2 pt-5">
@@ -144,6 +154,7 @@
 
           <div class="flex justify-end gap-2 pt-5">
             <p-button
+              type="submit"
               label="Back"
               icon="pi pi-angle-left"
               (onClick)="prevCallback.emit()"></p-button>

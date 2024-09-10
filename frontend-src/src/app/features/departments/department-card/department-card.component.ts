@@ -15,16 +15,31 @@ export class DepartmentCardComponent {
   @Output() onAdd = new EventEmitter();
   @Output() onEdit = new EventEmitter<number>();
   @Output() onDelete = new EventEmitter<number>();
+  @Output() onDetails = new EventEmitter<number>();
 
-  add() {
+  add(event: any) {
+    event.stopPropagation();
+
     this.onAdd.emit();
   }
 
-  edit() {
+  edit(event: any) {
+    event.stopPropagation();
+
     this.onEdit.emit(this.department!.id);
   }
 
-  delete() {
+  delete(event: any) {
+    event.stopPropagation();
+    
     this.onDelete.emit(this.department!.id);
+  }
+
+  details() {
+    if (!this.department) {
+      return;
+    }
+
+    this.onDetails.emit(this.department!.id);
   }
 }

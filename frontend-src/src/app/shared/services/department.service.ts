@@ -17,6 +17,12 @@ export class DepartmentService {
     );
   }
 
+  edit(id: number, name: string): Observable<any> {
+    return this._httpClient.put(`${environment.apiBaseUri}/department/${id}`, {
+      name,
+    });
+  }
+
   get(id: number): Observable<Department> {
     return this._httpClient.get<Department>(
       `${environment.apiBaseUri}/department/${id}`

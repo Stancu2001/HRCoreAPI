@@ -1,0 +1,12 @@
+<div class="align-items-center mb-3 grid gap-2">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="flex flex-col gap-1 text-[12px]">
+      <label for="name">Name</label>
+      <input pInputText id="name" formControlName="name" />
+    </div>
+
+    <div class="flex justify-end gap-2 pt-5">
+      <p-button type="submit" label="Save" icon="pi pi-plus"></p-button>
+    </div>
+  </form>
+</div>

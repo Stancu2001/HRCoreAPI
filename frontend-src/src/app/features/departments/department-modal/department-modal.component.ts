@@ -7,14 +7,15 @@ import { EmployeeAddModalComponent } from './employee-add-modal/employee-add-mod
 import { FunctionAddModalComponent } from './function-add-modal/function-add-modal.component';
 import { ConfirmationService } from 'primeng/api';
 import { FunctionService } from '../../../shared/services/function.service';
-import { Employee } from '../../../shared/models/employee.types';
+import { Employee, Payroll } from '../../../shared/models/employee.types';
 import { EmployeeService } from '../../../shared/services/employee.service';
 import { Observable } from 'rxjs';
+import { MonthFromNumberPipe } from "../../../core/pipes/month-from-number.pipe";
 
 @Component({
   selector: 'department-modal',
   standalone: true,
-  imports: [SharedModule, EmployeeAddModalComponent],
+  imports: [SharedModule, EmployeeAddModalComponent, MonthFromNumberPipe],
   templateUrl: './department-modal.component.html',
   styleUrl: './department-modal.component.scss',
 })
