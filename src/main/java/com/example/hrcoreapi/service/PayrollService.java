@@ -80,7 +80,11 @@ public BigDecimal calculateSalaryForMonth(int employeeId, YearMonth month) {
         throw new IllegalArgumentException("Payroll record already exists for employee and month");
     }
     EmployeeSalary currentSalary = employeeSalaryRepository.findActiveSalaryForMonth(employee,month.getYear(),month.getMonthValue())
-            .orElseThrow(() -> new IllegalArgumentException("No active salary found for employee"));
+            .orElse(null);
+    if (currentSalary == null) {
+//        System.out.println("No active salary found for employee in the given month.");
+        return BigDecimal.ZERO;
+    }
     int totalWorkingDays = getWorkingDaysInMonth(month);
 
     List<DayOfWeek> workingDays = Arrays.asList(
