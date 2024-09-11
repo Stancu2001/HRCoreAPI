@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FunctionService } from '../../../../shared/services/function.service';
 import { SharedModule } from '../../../../shared/shared.module';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'function-add-modal',
@@ -22,7 +23,8 @@ export class FunctionAddModalComponent implements OnInit {
     private _functionService: FunctionService,
     private _formBuilder: FormBuilder,
     private _dynamicDialogConfig: DynamicDialogConfig,
-    private _dynamicDialogRef: DynamicDialogRef
+    private _dynamicDialogRef: DynamicDialogRef,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -42,10 +44,22 @@ export class FunctionAddModalComponent implements OnInit {
 
       this._functionService.edit(this.form.value).subscribe(() => {
         this._dynamicDialogRef?.close(true);
+
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Function updated successfully',
+        });
       });
     } else {
       this._functionService.add(this.departmentId, this.form.value).subscribe(() => {
         this._dynamicDialogRef?.close(true);
+
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Function added successfully',
+        });
       });
     }
   }

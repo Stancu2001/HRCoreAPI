@@ -33,6 +33,29 @@ export class EmployeeService {
     );
   }
 
+  edit(id: number, data: any): Observable<any> {
+    const formData: FormData = new FormData();
+
+    formData.append(
+      'Address',
+      new Blob([JSON.stringify(data.address)], { type: 'application/json' })
+    );
+    formData.append(
+      'Employee',
+      new Blob([JSON.stringify(data.employee)], { type: 'application/json' })
+    );
+    formData.append(
+      'idfunctie',
+      new Blob([JSON.stringify(data.function)], { type: 'application/json' })
+    );
+
+    return this._httpClient.put(
+      `${environment.apiBaseUri}/employee/${id}`,
+      formData,
+      { responseType: 'text' }
+    );
+  }
+
   delete(id: number): Observable<any> {
     return this._httpClient.delete(`${environment.apiBaseUri}/employee/${id}`);
   }

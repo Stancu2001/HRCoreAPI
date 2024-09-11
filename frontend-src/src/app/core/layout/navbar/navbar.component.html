@@ -13,12 +13,21 @@
       }
     </ul>
 
-    <p-button severity="secondary" *ngIf="!isAuth" (onClick)="showLogin()"
-      >Login</p-button
-    >
-    <p-button severity="secondary" *ngIf="isAuth" (onClick)="logout()"
-      >Logout</p-button
-    >
+    <div class="flex gap-2">
+      <p-button
+        severity="secondary"
+        *ngIf="isAuth"
+        (onClick)="calculateAllSalaries()"
+        >Calculate all salaries</p-button
+      >
+
+      <p-button severity="secondary" *ngIf="!isAuth" (onClick)="showLogin()"
+        >Login</p-button
+      >
+      <p-button severity="secondary" *ngIf="isAuth" (onClick)="logout()"
+        >Logout</p-button
+      >
+    </div>
   </div>
 </div>
 

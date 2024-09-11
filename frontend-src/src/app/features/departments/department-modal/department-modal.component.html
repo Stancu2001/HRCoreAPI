@@ -59,6 +59,13 @@
             <td class="flex gap-2">
               <p-button
                 size="small"
+                icon="pi pi-pencil"
+                [rounded]="true"
+                (onClick)="openEditEmployeeModal(rowIndex)"
+                pTooltip="Edit employee"></p-button>
+
+              <p-button
+                size="small"
                 icon="pi pi-times"
                 [rounded]="true"
                 severity="primary"
@@ -94,6 +101,15 @@
                   </div>
                 </p-overlayPanel>
               </p-button>
+
+              <p-button
+                size="small"
+                icon="pi pi-wallet"
+                [rounded]="true"
+                severity="primary"
+                (onClick)="calculateNet(employee)"
+                pTooltip="CalcullateNet(rowIndex)"
+                pTooltip="Calculate salary" />
             </td>
           </tr>
         </ng-template>

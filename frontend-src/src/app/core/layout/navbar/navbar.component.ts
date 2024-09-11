@@ -11,6 +11,8 @@ import { finalize } from 'rxjs/operators';
 import { pipe } from 'rxjs';
 import { Router } from '@angular/router';
 import { TokenService } from '../../../shared/services/token.service';
+import { MessageService } from 'primeng/api';
+import { PayrollService } from '../../../shared/services/payroll.service';
 
 interface NavigationItem {
   name: string;
@@ -41,7 +43,9 @@ export class NavbarComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _formBuilder: UntypedFormBuilder,
-    private _tokenService: TokenService
+    private _tokenService: TokenService,
+    private _payrollService: PayrollService,
+    private _messageService: MessageService
   ) {
     this.loginForm = this._formBuilder.group({
       email: ['', [Validators.required]],
@@ -81,5 +85,15 @@ export class NavbarComponent implements OnInit {
   logout() {
     this._tokenService.removeToken();
     window.location.reload();
+  }
+
+  calculateAllSalaries() {
+    this._payrollService.calculate().subscribe(() => {
+      this._messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Salaries calculated successfully',
+      });
+    });
   }
 }

@@ -5,12 +5,13 @@ import { DepartmentService } from '../../../shared/services/department.service';
 import { SharedModule } from '../../../shared/shared.module';
 import { EmployeeAddModalComponent } from './employee-add-modal/employee-add-modal.component';
 import { FunctionAddModalComponent } from './function-add-modal/function-add-modal.component';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { FunctionService } from '../../../shared/services/function.service';
 import { Employee, Payroll } from '../../../shared/models/employee.types';
 import { EmployeeService } from '../../../shared/services/employee.service';
 import { Observable } from 'rxjs';
-import { MonthFromNumberPipe } from "../../../core/pipes/month-from-number.pipe";
+import { MonthFromNumberPipe } from '../../../core/pipes/month-from-number.pipe';
+import { PayrollService } from '../../../shared/services/payroll.service';
 
 @Component({
   selector: 'department-modal',
@@ -31,7 +32,9 @@ export class DepartmentModalComponent {
     private _functionService: FunctionService,
     private _employeeService: EmployeeService,
     private _confirmationService: ConfirmationService,
-    public _dialogService: DialogService
+    public _dialogService: DialogService,
+    private _messageService: MessageService,
+    private _payrollService: PayrollService
   ) {}
 
   open(id: number): void {
@@ -89,6 +92,25 @@ export class DepartmentModalComponent {
     });
   }
 
+  openEditEmployeeModal(row: number) {
+    const ref = this._dialogService.open(EmployeeAddModalComponent, {
+      header: 'Edit employee',
+      width: '600px',
+      data: {
+        edit: true,
+        departmentId: this.department?.id,
+        functions: this.department?.functions,
+        employee: this.department?.employeeList[row],
+      },
+    });
+
+    ref.onClose.subscribe((succes: boolean) => {
+      if (succes == true) {
+        this.loadDepartment(this.department?.id!);
+      }
+    });
+  }
+
   deleteEmployee(row: number) {
     this._confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -119,8 +141,24 @@ export class DepartmentModalComponent {
       accept: () => {
         this._functionService
           .delete(this.department?.functions[row].functionId!)
-          .subscribe(() => {
-            this.loadDepartment(this.department?.id!);
+          .subscribe({
+            next: () => {
+              this.loadDepartment(this.department?.id!);
+
+              this._messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Function deleted successfully',
+              });
+            },
+            error: () => {
+              this._messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail:
+                  'You cannot delete a function that is assigned to an employee',
+              });
+            },
           });
       },
       reject: () => {},
@@ -170,5 +208,26 @@ export class DepartmentModalComponent {
         this.loadDepartment(this.department?.id!);
       });
     }
+  }
+
+  calculateNet(employee: Employee) {
+    this._payrollService.calculate(employee.idEmployee!).subscribe({
+      next: (payroll: any) => {
+        this.loadDepartment(this.department?.id!);
+
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Net salary calculated successfully',
+        });
+      },
+      error: () => {
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'The salary was already calculated for previous month',
+        });
+      },
+    });
   }
 }

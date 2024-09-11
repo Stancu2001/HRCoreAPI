@@ -3,7 +3,7 @@ import { DepartmentService } from '../../shared/services/department.service';
 import { Department } from '../../shared/models/department.types';
 import { DepartmentCardComponent } from './department-card/department-card.component';
 import { SharedModule } from '../../shared/shared.module';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DepartmentModalComponent } from './department-modal/department-modal.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DepartmentAddModalComponent } from './department-card/department-add-modal/department-add-modal.component';
@@ -24,7 +24,8 @@ export class DepartmentsComponent implements OnInit {
   constructor(
     private _departmentService: DepartmentService,
     private _confirmationService: ConfirmationService,
-    public _dialogService: DialogService
+    public _dialogService: DialogService,
+    private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -39,9 +40,19 @@ export class DepartmentsComponent implements OnInit {
       width: '600px',
     });
 
-    ref.onClose.subscribe(() => {
+    ref.onClose.subscribe((data) => {
+      if(!data) {
+        return;
+      }
+
       this._departmentService.getAll().subscribe(res => {
         this.departments = res;
+
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Department added successfully',
+        });
       });
     });
   }
@@ -57,9 +68,19 @@ export class DepartmentsComponent implements OnInit {
       data: { data: this.departments.find(d => d.id === id) },
     });
 
-    ref.onClose.subscribe(() => {
+    ref.onClose.subscribe((data) => {
+      if(!data) {
+        return;
+      }
+
       this._departmentService.getAll().subscribe(res => {
         this.departments = res;
+
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Department edited successfully',
+        });
       });
     });
   }
@@ -73,8 +94,24 @@ export class DepartmentsComponent implements OnInit {
       rejectIcon: 'none',
       rejectButtonStyleClass: 'p-button-text',
       accept: () => {
-        this._departmentService.delete(id).subscribe(() => {
-          this.departments = this.departments.filter(d => d.id !== id);
+        this._departmentService.delete(id).subscribe({
+          next: res => {
+            this.departments = this.departments.filter(d => d.id !== id);
+
+            this._messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Department deleted successfully',
+            });
+          },
+          error: err => {
+            this._messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail:
+                "You can't delete this department because it has employees",
+            });
+          },
         });
       },
       reject: () => {},
