@@ -83,7 +83,7 @@ public class JwtUtils {
                 .claim("Last_Name",userPrincipal.getLastName())
                 .claim("Roles",roles)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis()+ Duration.ofHours(1).toMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()+ Duration.ofDays(15).toMillis()))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
