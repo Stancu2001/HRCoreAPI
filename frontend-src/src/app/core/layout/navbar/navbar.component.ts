@@ -89,6 +89,12 @@ export class NavbarComponent implements OnInit {
 
     this._authService
       .login(this.loginForm.value.email!, this.loginForm.value.password!)
+      .pipe(
+        finalize(() => {
+          this.loginForm.enable();
+          this.loginNgForm.resetForm();
+        })
+      )
       .subscribe({
         next: (res: any) => {
           this._tokenService.setToken(res.token);
