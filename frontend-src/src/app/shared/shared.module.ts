@@ -20,6 +20,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ToastModule } from 'primeng/toast';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const primeNgModules = [
   InputTextModule,
@@ -51,6 +52,7 @@ const primeNgModules = [
     RouterLinkActive,
     primeNgModules,
     NgxScannerQrcodeModule,
+    QRCodeModule,
   ],
   exports: [
     CommonModule,
@@ -62,6 +64,7 @@ const primeNgModules = [
     RouterLink,
     RouterLinkActive,
     NgxScannerQrcodeModule,
+    QRCodeModule,
   ],
 })
 export class SharedModule {}

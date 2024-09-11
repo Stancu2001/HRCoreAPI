@@ -12,6 +12,7 @@ import { EmployeeService } from '../../../shared/services/employee.service';
 import { Observable } from 'rxjs';
 import { MonthFromNumberPipe } from '../../../core/pipes/month-from-number.pipe';
 import { PayrollService } from '../../../shared/services/payroll.service';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'department-modal',
@@ -26,6 +27,7 @@ export class DepartmentModalComponent {
   selectedEmployee: Employee;
   viewEmployeeData = false;
   salary?: number | null = null;
+  qrCodeDownloadLink: SafeUrl | undefined;
 
   constructor(
     private _departmentService: DepartmentService,
@@ -229,5 +231,9 @@ export class DepartmentModalComponent {
         });
       },
     });
+  }
+
+  onChangeURL(url: SafeUrl) {
+    this.qrCodeDownloadLink = url;
   }
 }
