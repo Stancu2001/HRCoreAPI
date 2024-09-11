@@ -8,11 +8,13 @@ import com.example.hrcoreapi.service.DepartmentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAnyRole('User','Admin')")
 @RequestMapping("/department")
 public class DepartmentController {
     @Autowired
