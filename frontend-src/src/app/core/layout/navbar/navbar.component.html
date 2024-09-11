@@ -41,19 +41,30 @@
   <form class="grid gap-5" [formGroup]="loginForm">
     <div class="grid gap-1">
       <label class="block w-full text-[13px]" for="email">Email</label>
-      <input pInputText type="email" [formControlName]="'email'" />
+      <input
+        pInputText
+        required
+        type="email"
+        [formControlName]="'email'"
+        class="{{
+          loginForm.controls['email'].errors ? 'ng-invalid ng-dirty' : ''
+        }}" />
     </div>
     <div class="grid gap-1">
       <label class="block w-full text-[13px]" for="username">Password</label>
       <input
+        required
         pInputText
         id="password"
         type="password"
-        [formControlName]="'password'" />
+        [formControlName]="'password'"
+        class="{{
+          loginForm.controls['password'].errors ? 'ng-invalid ng-dirty' : ''
+        }}" />
     </div>
   </form>
   <ng-template pTemplate="footer">
     <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
-    <p-button label="Login" (onClick)="login()" />
+    <p-button label="Login" (onClick)="login()" [disabled]="this.loginForm.invalid"/>
   </ng-template>
 </p-dialog>

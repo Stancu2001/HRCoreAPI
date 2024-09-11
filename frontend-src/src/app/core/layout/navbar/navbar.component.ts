@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SharedModule } from '../../../shared/shared.module';
 import { AuthService } from '../../../shared/services/auth.service';
 import {
+  FormControl,
   NgForm,
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -48,13 +49,18 @@ export class NavbarComponent implements OnInit {
     private _messageService: MessageService
   ) {
     this.loginForm = this._formBuilder.group({
-      email: ['', [Validators.required]],
-      password: ['', Validators.required],
+      email: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
     });
   }
 
   ngOnInit() {
     this.isAuth = this._tokenService.isAuth();
+
+    this.loginForm.markAllAsTouched();
+    this.loginForm.markAsDirty();
+    this.loginForm.markAsTouched();
+    this.loginForm.markAsPristine();
   }
 
   showLogin() {
@@ -68,17 +74,33 @@ export class NavbarComponent implements OnInit {
 
     this.loginForm.disable();
 
+    // this._authService
+    //   .login(this.loginForm.value.email!, this.loginForm.value.password!)
+    //   .pipe(
+    //     finalize(() => {
+    //       this.loginForm.enable();
+    //       this.loginNgForm.resetForm();
+    //     })
+    //   )
+    //   .subscribe((res: any) => {
+    //     this._tokenService.setToken(res.token);
+    //     window.location.reload();
+    //   });
+
     this._authService
       .login(this.loginForm.value.email!, this.loginForm.value.password!)
-      .pipe(
-        finalize(() => {
-          this.loginForm.enable();
-          this.loginNgForm.resetForm();
-        })
-      )
-      .subscribe((res: any) => {
-        this._tokenService.setToken(res.token);
-        window.location.reload();
+      .subscribe({
+        next: (res: any) => {
+          this._tokenService.setToken(res.token);
+          window.location.reload();
+        },
+        error: err => {
+          this._messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Invalid email or password',
+          });
+        },
       });
   }
 
