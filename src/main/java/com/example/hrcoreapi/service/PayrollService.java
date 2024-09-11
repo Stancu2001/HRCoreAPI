@@ -72,13 +72,17 @@ public class PayrollService {
 //            return dailyRate.multiply(new BigDecimal(daysPresent));
 //        }
 //    }
-public BigDecimal calculateSalaryForMonth(int employeeId, YearMonth month) {
+public BigDecimal calculateSalaryForMonth(int employeeId, YearMonth month, boolean isForALL) {
     Employee employee = employeeRepository.findById(employeeId)
             .orElseThrow(() -> new IllegalArgumentException("Employee not found"));
 
     if (payrollRecordRepository.existsByEmployeeAndMonth(employee, month.getMonthValue())) {
+        if (!isForALL) {
+            throw new IllegalArgumentException("Payroll record already exists for employee and month");
+        }
         return BigDecimal.ZERO;
     }
+
     EmployeeSalary currentSalary = employeeSalaryRepository.findActiveSalaryForMonth(employee,month.getYear(),month.getMonthValue())
             .orElse(null);
     if (currentSalary == null) {

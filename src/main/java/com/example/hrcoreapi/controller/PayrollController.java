@@ -33,7 +33,7 @@ public class PayrollController {
         try {
             YearMonth currentMonth = YearMonth.from(LocalDate.now());
             YearMonth previousMonth = currentMonth.minusMonths(  1);
-            BigDecimal netSalary = payrollService.calculateSalaryForMonth(employeeId, previousMonth);
+            BigDecimal netSalary = payrollService.calculateSalaryForMonth(employeeId, previousMonth,false);
             return ResponseEntity.ok(netSalary);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid employee ID: " + employeeId, e);
@@ -49,7 +49,7 @@ public class PayrollController {
             List<Employee> employeeList=employeeService.getAllEmployee();
             List<BigDecimal> netSalaries=new ArrayList<>();
             for(var employee:employeeList){
-            BigDecimal netSalary = payrollService.calculateSalaryForMonth(employee.getIdEmployee(), previousMonth);
+            BigDecimal netSalary = payrollService.calculateSalaryForMonth(employee.getIdEmployee(), previousMonth, true);
                 netSalaries.add(netSalary);
             }
             return ResponseEntity.ok(netSalaries);
