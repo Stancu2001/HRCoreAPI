@@ -53,7 +53,7 @@ export class EmployeeAddModalComponent implements OnInit {
         bankCode: new FormControl(employee?.bankCode ?? '', [Validators.required]),
         gender: new FormControl(employee?.gender ?? '', [Validators.required]),
         age: new FormControl(employee?.age ?? '', [Validators.min(1), Validators.max(99)]),
-        remarks: new FormControl(employee?.remarks ?? '', [Validators.required]),
+        remarks: new FormControl(employee?.remarks),
       }),
       address: this._formBuilder.group({
         street: new FormControl(employee?.address.street ?? '', [Validators.required]),
