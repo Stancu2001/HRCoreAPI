@@ -77,7 +77,7 @@ public BigDecimal calculateSalaryForMonth(int employeeId, YearMonth month) {
             .orElseThrow(() -> new IllegalArgumentException("Employee not found"));
 
     if (payrollRecordRepository.existsByEmployeeAndMonth(employee, month.getMonthValue())) {
-        throw new IllegalArgumentException("Payroll record already exists for employee and month");
+        return BigDecimal.ZERO;
     }
     EmployeeSalary currentSalary = employeeSalaryRepository.findActiveSalaryForMonth(employee,month.getYear(),month.getMonthValue())
             .orElse(null);
