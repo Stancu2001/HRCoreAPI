@@ -8,6 +8,7 @@ import { DepartmentModalComponent } from './department-modal/department-modal.co
 import { DialogService } from 'primeng/dynamicdialog';
 import { DepartmentAddModalComponent } from './department-card/department-add-modal/department-add-modal.component';
 import { DepartmentEditComponent } from './department-edit/department-edit.component';
+import { TokenService } from '../../shared/services/token.service';
 
 @Component({
   selector: 'app-departments',
@@ -20,12 +21,14 @@ export class DepartmentsComponent implements OnInit {
   @ViewChild(DepartmentModalComponent) childComponent: DepartmentModalComponent;
 
   departments: Department[] = [];
+  isAuthorized: boolean = false;
 
   constructor(
     private _departmentService: DepartmentService,
     private _confirmationService: ConfirmationService,
     public _dialogService: DialogService,
-    private _messageService: MessageService
+    private _messageService: MessageService,
+    public _tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
